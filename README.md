@@ -3,6 +3,6 @@
 Запуск проекта:
 1. Скачать репозиторий
 2. Перейти в папку и запустить npm install
-3. Запуск сервера npm start
-4. Добавить свой API key в App.js для подключения к Clarifai.
-Clarifai API key можно получить при регистрации на сайте: https://www.clarifai.com/
+3. Добавить свой API key в App.js для подключения к Clarifai. Можно получить при регистрации на сайте: https://www.clarifai.com/
+4. Запуск сервера npm start
+

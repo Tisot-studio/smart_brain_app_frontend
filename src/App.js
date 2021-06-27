@@ -15,7 +15,7 @@ const app = new Clarifai.App({
  apiKey: 'TOKEN'
 });
 
-// парметры для particles.js
+// Параметры для particles.js
 const particlesOptions = {
   particles: {
     line_linked: {

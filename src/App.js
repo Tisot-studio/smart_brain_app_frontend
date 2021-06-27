@@ -12,7 +12,7 @@ import Register from './components/Register/Register';
 
 // Добавляем свой API Key
 const app = new Clarifai.App({
- apiKey: '9966c7523de54b3cb7641864e8dd433e'
+ apiKey: 'TOKEN'
 });
 
 // парметры для particles.js
@@ -45,14 +45,13 @@ class App extends Component {
   // 1. Принимаем аргумент в виде данных с API
   // 2. Захватываем изображение через DOM
   // 3. Определяем ширину и высоту изображения
-  // 4. Выводим объект содержащий данные для построения рамки, т.к. ARI присылает процентное соотношение к изображению,
+  // 4. Выводим объект содержащий данные для построения рамки, т.к. API присылает процентное соотношение к изображению,
   // вычисляем каждую сторону 
   calculateFaceLocation = (data) => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputimage')
     const width = Number(image.width)
     const height = Number(image.height)
-    console.log(clarifaiFace)
     return { 
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -77,12 +76,12 @@ class App extends Component {
   // Функция для обновления imageURL, при нажатии на кнопку значение input загружается в значение imageURL,
   // а это значение является источником изображения, которое отобразится под формой
   // Затем происходит звонок на API, туда отправляются данные из input, 
-  // в ответ присылается обект с нужными нам значениями, на их основе будет создаваться рамка вокург лица
+  // в ответ присылается обект с нужными нам значениями, на их основе будет создаваться рамка вокруг лица
   onSubmit = (event) =>{
     this.setState({imageURL: this.state.input})
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then(response => {
-      this.displayFaceBox(this.calculateFaceLocation(response))})   // Пример высокоуровневой функции
+      this.displayFaceBox(this.calculateFaceLocation(response))})   
     .catch(error => console.log(error))
   }
 
@@ -103,7 +102,7 @@ class App extends Component {
       <ImageForm onImputChange={this.onImputChange} onSubmit={this.onSubmit}/>
       <FaceRecognition box={box} imageURL={imageURL}/>
       </div>
-       : (route === 'signin'               // Второе условие: отобразить форму для входа, либо для регистрации
+       : (route === 'signin'               // Отобразить форму для входа, либо для регистрации
        ?<Signin onRouteChange={this.onRouteChange} />
        :<Register onRouteChange={this.onRouteChange} />)
        }
